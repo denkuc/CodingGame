@@ -15,8 +15,8 @@ def get_included_content():
     files_root_folder_path = './game'
     included_content = ''
 
-    files_tree = ready_directory_and_build_info_tree(files_root_folder_path)
-    for key, file_info in files_tree.items():
+    files_info_tree = read_directory_and_build_files_info_tree(files_root_folder_path)
+    for file_info in files_info_tree:
         if included_content != '':
             included_content += "\r\n"
 
@@ -25,8 +25,8 @@ def get_included_content():
     return included_content
 
 
-def ready_directory_and_build_info_tree(base_path: str):
-    info_tree = {}
+def read_directory_and_build_files_info_tree(base_path: str):
+    files_info_tree = {}
     for file_path in glob.iglob(base_path + '**/**', recursive=True):
         if file_path.find('.py') == -1:
             continue
@@ -36,9 +36,16 @@ def ready_directory_and_build_info_tree(base_path: str):
 
         file_infos = get_file_infos(file_path)
         for key, value in file_infos.items():
-            info_tree[key] = value
+            files_info_tree[key] = value
 
-    return info_tree
+    for file_info in files_info_tree.values():
+        setup_dependencies(file_info, files_info_tree.keys())
+
+    files_info_tree = update_position(files_info_tree)
+
+    sorted_files_info_tree = sorted(files_info_tree.values(), key=lambda d: d['position'])
+
+    return sorted_files_info_tree
 
 
 def get_file_infos(file_path):
@@ -53,10 +60,44 @@ def get_file_infos(file_path):
             'path': file_path,
             'class_name': class_name,
             'class_content': get_class_content(class_name, file_content),
-            'dependencies': get_class_dependencies(class_name, file_content)
+            'dependencies': [],
+            'position': 0
         }
 
     return file_infos
+
+
+def setup_dependencies(file_info, class_name_list):
+    for class_name in class_name_list:
+        if class_name == file_info['class_name']:
+            continue
+
+        if file_info['class_content'].find(class_name) == -1:
+            continue
+
+        file_info['dependencies'].append(class_name)
+        
+        
+def update_position(files_info_tree: dict):
+    is_position_updated = False
+    for class_name, file_info in files_info_tree.items():
+        if len(file_info['dependencies']) == 0:
+            continue
+
+        position = file_info['position']
+        for dependency_name in file_info['dependencies']:
+            dependency_position = files_info_tree[dependency_name]['position']
+            if dependency_position >= position:
+                position = dependency_position + 1
+
+        if file_info['position'] != position:
+            file_info['position'] = position
+            is_position_updated = True
+
+    if is_position_updated is True:
+        return update_position(files_info_tree)
+
+    return files_info_tree
 
 
 def get_class_content(class_name, file_content):
@@ -75,11 +116,6 @@ def get_class_content(class_name, file_content):
         class_content = class_content[0:-5]
 
     return class_content
-
-
-def get_class_dependencies(class_name, file_content):
-    dependencies = []
-
 
 
 if __name__ == '__main__':
