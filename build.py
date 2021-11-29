@@ -55,14 +55,16 @@ def get_file_infos(file_path):
     file_resource.close()
 
     find_classes_result = re.findall(r'class ([a-zA-Z]+)', file_content, re.MULTILINE)
+    position = 0
     for class_name in find_classes_result:
         file_infos[class_name] = {
             'path': file_path,
             'class_name': class_name,
             'class_content': get_class_content(class_name, file_content),
             'dependencies': [],
-            'position': 0
+            'position': position
         }
+        position = position + 1
 
     return file_infos
 
