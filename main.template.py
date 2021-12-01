@@ -1,25 +1,31 @@
 import sys
 import math
 
+from common.coordinates import Coordinates
 from entity.map import Map
+from entity.player import Player
 from game import Game
 
 {placeholder}
 
 map = Map(7, 7)
 game = Game(map)
+game.players.add(Player(0))
+game.players.add(Player(1))
 
 while True:
     turn_type = int(input())
     for i in range(7):
         for tile in input().split():
             pass
+
     for i in range(2):
         inputs = input().split()
-        game.num_player_cards = int(inputs[0])  # the total number of quests for a player (hidden and revealed)
-        player_x = int(inputs[1])
-        player_y = int(inputs[2])
+        player = game.players.get_by_id(i)
+        player.num_player_cards = int(inputs[0])  # the total number of quests for a player (hidden and revealed)
+        player.coordinates = Coordinates(int(inputs[1]), int(inputs[2]))
         player_tile = inputs[3]
+
     num_items = int(input())  # the total number of items available on board and on player tiles
     for i in range(num_items):
         inputs = input().split()
