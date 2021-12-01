@@ -1,6 +1,6 @@
 from entity.actions.move_action import MoveAction
 from entity.player import Player
-from entity.strategy.base_strategy import BaseStrategy
+from logic.strategy.base_strategy import BaseStrategy
 from main import BaseAction
 
 
