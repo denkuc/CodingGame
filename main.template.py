@@ -16,8 +16,7 @@ player_action_dispatcher = PlayerActionDispatcher(game)
 my_player_ids = [0]
 
 while True:
-    turn_type = int(input())
-    game
+    game.turn_type = int(input())
     map.tiles.remove_all()
     for y in range(7):
         for x, tile_string in enumerate(input().split()):

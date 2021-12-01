@@ -6,7 +6,7 @@ class Game:
     def __init__(self, map: Map):
         self.map = map
         self.players = PlayerCollection()
-        self.num_player_cards = None
+        self.turn_type = None
 
     @property
     def map(self) -> Map:
@@ -25,9 +25,11 @@ class Game:
         self.__players = players
 
     @property
-    def num_player_cards(self) -> int:
-        return self.__num_player_cards
+    def turn_type(self) -> int:
+        return self.__turn_type
 
-    @num_player_cards.setter
-    def num_player_cards(self, num_player_cards: int):
-        self.__num_player_cards = num_player_cards
+    @turn_type.setter
+    def turn_type(self, turn_type: int):
+        self.__turn_type = turn_type
+
+
