@@ -4,7 +4,7 @@ from entity.strategy.base_strategy import BaseStrategy
 from main import BaseAction
 
 
-class WalkStrategy(BaseStrategy):
+class MoveStrategy(BaseStrategy):
     def execute(self, player: Player) -> BaseAction:
         action = MoveAction(player.tile.get_possible_directions().first())
 
