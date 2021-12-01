@@ -3,9 +3,9 @@ from common.collection import MutableCollection
 
 class Direction:
     DIRECTIONS = {
-        0: 'TOP',
+        0: 'UP',
         1: 'RIGHT',
-        2: 'BOTTOM',
+        2: 'DOWN',
         3: 'LEFT'
     }
 
