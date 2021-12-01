@@ -68,7 +68,7 @@ class ProjectBuilder:
 
     @staticmethod
     def __is_internal_import(import_line: str) -> bool:
-        internal_import_folders = ['entity', 'common']
+        internal_import_folders = ['entity', 'common', 'service', 'logic']
 
         for internal_import_folder in internal_import_folders:
             if import_line.find(internal_import_folder) > -1:

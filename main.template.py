@@ -6,23 +6,29 @@ from entity.map import Map
 from entity.player import Player
 from entity.tile import Tile
 from game import Game
+from service.player_action_dispatcher import PlayerActionDispatcher
 
 {placeholder}
 
 map = Map(7, 7)
 game = Game(map)
-game.players.add(Player(0))
-game.players.add(Player(1))
+player_action_dispatcher = PlayerActionDispatcher(game)
 
 while True:
     turn_type = int(input())
-    for i in range(7):
-        for tile in input().split():
-            pass
+    map.tiles.remove_all()
+    for y in range(7):
+        for x, tile_string in enumerate(input().split()):
+            map.tiles.add(Tile(tile_string, Coordinates(x, y)))
 
     for i in range(2):
         inputs = input().split()
+
         player = game.players.get_by_id(i)
+        if player is None:
+            player = Player(i)
+            game.players.add(player)
+
         player.num_player_cards = int(inputs[0])  # the total number of quests for a player (hidden and revealed)
         player.coordinates = Coordinates(int(inputs[1]), int(inputs[2]))
         player.tile = Tile(inputs[3])
@@ -40,8 +46,10 @@ while True:
         quest_item_name = inputs[0]
         quest_player_id = int(inputs[1])
 
-# Write an action using print
-# To debug: print("Debug messages...", file=sys.stderr, flush=True)
+    # Write an action using print
+    # To debug: print("Debug messages...", file=sys.stderr, flush=True)
 
-# PUSH <id> <direction> | MOVE <direction> | PASS
-    print("MOVE RIGHT")
+    # PUSH <id> <direction> | MOVE <direction> | PASS
+    actions = player_action_dispatcher.get_actions()
+    for action in actions:
+        print(action.to_string())

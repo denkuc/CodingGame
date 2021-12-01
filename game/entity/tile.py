@@ -2,7 +2,7 @@ from typing import Optional
 
 from common.collection import MutableCollection
 from common.coordinates import Coordinates
-from entity.move import MoveCollection, Move
+from entity.direction import DirectionCollection, Direction
 
 
 class Tile:
@@ -18,14 +18,14 @@ class Tile:
     def coordinates(self, coordinates: Optional[Coordinates]):
         self.__coordinates = coordinates
 
-    def get_possible_moves(self) -> MoveCollection:
-        possible_moves = MoveCollection()
+    def get_possible_directions(self) -> DirectionCollection:
+        possible_directions = DirectionCollection()
 
         for index, direction_allowed in enumerate(self.tile_string):
             if int(direction_allowed) == 1:
-                possible_moves.add(Move(index))
+                possible_directions.add(Direction(index))
 
-        return possible_moves
+        return possible_directions
 
 
 class TileCollection(MutableCollection):
