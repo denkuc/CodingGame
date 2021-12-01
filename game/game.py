@@ -4,6 +4,7 @@ from entity.map import Map
 class Game:
     def __init__(self, map: Map):
         self.map = map
+        self.num_player_cards = None
 
     @property
     def map(self) -> Map:
@@ -12,3 +13,13 @@ class Game:
     @map.setter
     def map(self, map: Map):
         self.__map = map
+
+    @property
+    def num_player_cards(self) -> int:
+        return self.__num_player_cards
+
+    @num_player_cards.setter
+    def num_player_cards(self, num_player_cards: int):
+        self.__num_player_cards = num_player_cards
+
+
