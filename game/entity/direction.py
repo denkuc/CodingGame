@@ -1,4 +1,4 @@
-from common.collection import Collection, MutableCollection
+from common.collection import MutableCollection
 
 
 class Direction:
