@@ -4,6 +4,7 @@ import math
 from common.coordinates import Coordinates
 from entity.map import Map
 from entity.player import Player
+from entity.tile import Tile
 from game import Game
 
 {placeholder}
@@ -24,7 +25,7 @@ while True:
         player = game.players.get_by_id(i)
         player.num_player_cards = int(inputs[0])  # the total number of quests for a player (hidden and revealed)
         player.coordinates = Coordinates(int(inputs[1]), int(inputs[2]))
-        player_tile = inputs[3]
+        player.tile = Tile(inputs[3])
 
     num_items = int(input())  # the total number of items available on board and on player tiles
     for i in range(num_items):
