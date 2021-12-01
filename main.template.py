@@ -13,6 +13,7 @@ from service.player_action_dispatcher import PlayerActionDispatcher
 map = Map(7, 7)
 game = Game(map)
 player_action_dispatcher = PlayerActionDispatcher(game)
+my_player_ids = [0]
 
 while True:
     turn_type = int(input())
@@ -27,6 +28,8 @@ while True:
         player = game.players.get_by_id(i)
         if player is None:
             player = Player(i)
+            if i in my_player_ids:
+                player.is_my = True
             game.players.add(player)
 
         player.num_player_cards = int(inputs[0])  # the total number of quests for a player (hidden and revealed)

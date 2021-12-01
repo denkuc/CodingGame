@@ -13,6 +13,7 @@ class Player:
         self.coordinates = None
         self.tile = None
         self.items = ItemCollection()
+        self.is_my = False
 
     @property
     def id(self) -> int:
@@ -54,6 +55,14 @@ class Player:
     def items(self, items: ItemCollection):
         self.__items = items
 
+    @property
+    def is_my(self) -> bool:
+        return self.__is_my
+
+    @is_my.setter
+    def is_my(self, is_my: bool):
+        self.__is_my = is_my
+
 
 class PlayerCollection(MutableCollection):
     def get_by_id(self, player_id: int) -> Optional[Player]:
@@ -62,3 +71,11 @@ class PlayerCollection(MutableCollection):
                 return player
 
         return None
+
+    def get_my_players(self) -> 'PlayerCollection':
+        my_players = PlayerCollection()
+        for player in self:
+            if player.is_my():
+                my_players.add(player)
+
+        return my_players
