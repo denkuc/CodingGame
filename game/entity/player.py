@@ -75,7 +75,7 @@ class PlayerCollection(MutableCollection):
     def get_my_players(self) -> 'PlayerCollection':
         my_players = PlayerCollection()
         for player in self:
-            if player.is_my():
+            if player.is_my:
                 my_players.add(player)
 
         return my_players
