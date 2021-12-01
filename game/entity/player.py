@@ -2,6 +2,8 @@ from typing import Optional
 
 from common.collection import MutableCollection
 from common.coordinates import Coordinates
+from entity.item import ItemCollection
+from entity.tile import Tile
 
 
 class Player:
@@ -10,14 +12,15 @@ class Player:
         self.num_player_cards = None
         self.coordinates = None
         self.tile = None
+        self.items = ItemCollection()
 
     @property
     def id(self) -> int:
         return self.__id
 
     @id.setter
-    def id(self, id: int):
-        self.__id = id
+    def id(self, player_id: int):
+        self.__id = player_id
 
     @property
     def num_player_cards(self) -> int:
@@ -42,6 +45,14 @@ class Player:
     @tile.setter
     def tile(self, tile: Tile):
         self.__tile = tile
+
+    @property
+    def items(self) -> ItemCollection:
+        return self.__items
+
+    @items.setter
+    def items(self, items: ItemCollection):
+        self.__items = items
 
 
 class PlayerCollection(MutableCollection):
