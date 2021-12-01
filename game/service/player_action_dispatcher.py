@@ -1,4 +1,5 @@
 from entity.actions.base_action import ActionCollection
+from entity.actions.pass_action import PassAction
 from game import Game
 
 
@@ -8,5 +9,6 @@ class PlayerActionDispatcher:
 
     def get_actions(self) -> ActionCollection:
         actions = ActionCollection()
+        actions.add(PassAction())
 
         return actions
