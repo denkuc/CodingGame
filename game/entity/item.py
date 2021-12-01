@@ -36,4 +36,11 @@ class Item:
 
 
 class ItemCollection(MutableCollection):
-    ...
+    def get_or_create_by_id(self, item_id: int, name: str) -> Optional[Item]:
+        for item in self:
+            if item.id == item_id:
+                return item
+        new_item = Item(item_id, name)
+        self.add(new_item)
+
+        return new_item

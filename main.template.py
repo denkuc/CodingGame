@@ -30,12 +30,11 @@ while True:
         player.tile = Tile(inputs[3])
 
     num_items = int(input())  # the total number of items available on board and on player tiles
-    for i in range(num_items):
+    for item_index in range(num_items):
         inputs = input().split()
-        item_name = inputs[0]
-        item_x = int(inputs[1])
-        item_y = int(inputs[2])
-        item_player_id = int(inputs[3])
+        player = game.players.get_by_id(int(inputs[3]))
+        item = player.items.get_or_create_by_id(item_index, inputs[0])
+        item.coordinates = Coordinates(int(inputs[1]), int(inputs[2]))
 
     num_quests = int(input())  # the total number of revealed quests for both players
     for i in range(num_quests):
