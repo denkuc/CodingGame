@@ -68,7 +68,7 @@ class ProjectBuilder:
 
     @staticmethod
     def __is_internal_import(import_line: str) -> bool:
-        internal_import_folders = ['entity']
+        internal_import_folders = ['entity', 'common']
 
         for internal_import_folder in internal_import_folders:
             if import_line.find(internal_import_folder) > -1:
@@ -141,6 +141,12 @@ class ProjectBuilder:
                 continue
 
             if file_info['class_content'].find(class_name) == -1:
+                continue
+
+            if file_info['class_content'].find('"{}"'.format(class_name)) > -1:
+                continue
+
+            if file_info['class_content'].find("'{}'".format(class_name)) > -1:
                 continue
 
             file_info['dependencies'].append(class_name)
