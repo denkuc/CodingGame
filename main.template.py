@@ -11,8 +11,6 @@ from game import Game
 
 map = Map(7, 7)
 game = Game(map)
-game.players.add(Player(0))
-game.players.add(Player(1))
 
 while True:
     turn_type = int(input())
@@ -23,6 +21,10 @@ while True:
     for i in range(2):
         inputs = input().split()
         player = game.players.get_by_id(i)
+        if player is None:
+            player = Player(i)
+            game.players.add(player)
+
         player.num_player_cards = int(inputs[0])  # the total number of quests for a player (hidden and revealed)
         player.coordinates = Coordinates(int(inputs[1]), int(inputs[2]))
         player.tile = Tile(inputs[3])
@@ -34,6 +36,7 @@ while True:
         item_x = int(inputs[1])
         item_y = int(inputs[2])
         item_player_id = int(inputs[3])
+
     num_quests = int(input())  # the total number of revealed quests for both players
     for i in range(num_quests):
         inputs = input().split()

@@ -1,7 +1,7 @@
 from common.collection import Collection, MutableCollection
 
 
-class Move:
+class Direction:
     DIRECTIONS = {
         0: 'TOP',
         1: 'RIGHT',
@@ -21,6 +21,6 @@ class Move:
         self.__direction = direction
 
 
-class MoveCollection(MutableCollection):
+class DirectionCollection(MutableCollection):
     ...
 
