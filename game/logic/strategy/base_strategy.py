@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
+from entity.actions.base_action import BaseAction
 from entity.player import Player
-from main import BaseAction
 
 
 class BaseStrategy(ABC):
