@@ -1,4 +1,5 @@
 import glob
+import json
 import re
 
 
@@ -8,7 +9,7 @@ class ProjectBuilder:
 
     def get_content(self) -> str:
         prepared_content = ''
-        prepared_content = self.__get_and_add_imports(prepared_content)
+        # prepared_content = self.__get_and_add_imports(prepared_content)
         prepared_content = self.__get_and_add_classes(prepared_content)
 
         return prepared_content
@@ -37,7 +38,6 @@ class ProjectBuilder:
 
     def __collect_imports_from_file(self, file_path: str) -> set:
         collected_imports = set()
-
         file_resource = open(file_path, 'r')
         file_content = file_resource.read()
         file_resource.close()
@@ -194,7 +194,7 @@ class ProjectBuilder:
 
 
 if __name__ == '__main__':
-    project_builder = ProjectBuilder('game')
+    project_builder = ProjectBuilder('labyrinth')
 
     template_file_resource = open('main.template.py', 'r')
     template_file_content = template_file_resource.read()

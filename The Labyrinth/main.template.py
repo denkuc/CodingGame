@@ -1,14 +1,10 @@
+from typing import Optional, Tuple, Iterator, List
+import numpy as np
 import sys
-import math
+from math import sqrt, acos
+from enum import Enum
+from abc import abstractmethod, ABC
 
-from common.coordinates import Coordinates
-from entity.map import Map
-from game import Game
-from service.cell_builder import CellBuilder
-from service.graph_updator import GraphUpdator
-from service.log import Logger
-from service.moves_definer import MovesDefiner
-from service.moves_estimator import MovesEstimator
 
 {placeholder}
 
@@ -22,15 +18,21 @@ from service.moves_estimator import MovesEstimator
 r, c, a = [int(i) for i in input().split()]
 
 
-# game loop
+# labyrinth loop
 game_map = Map(c, r)
 game = Game(game_map)
-moves_definer = MovesDefiner(game)
-moves_estimator = MovesEstimator(game)
-graph_updator = GraphUpdator(game)
+for i in range(r):
+    for j in range(c):
+        cell = CellBuilder.build_cell(j, i)
+        game.cells.add(cell)
 
+direction_dispatcher = DirectionDispatcher(game)
+regions_extractor = RegionsExtractor(game.cells, game_map)
+
+turn = 0
 
 while True:
+    turn += 1
     # kr: row where Rick is located.
     # kc: column where Rick is located.
     kr, kc = [int(i) for i in input().split()]
@@ -39,18 +41,15 @@ while True:
     for i in range(r):
         row = input()  # C of the characters in '#.TC?' (i.e. one line of the ASCII maze).
         for j, cell_type in enumerate(row):
-            cell = CellBuilder.build_cell(j, i, cell_type)
-            game.cells.update_or_create(cell)
+            game.cells.update_cell(j, i, cell_type)
 
-    graph_updator.update_graph()
+    regions_extractor.assign_regions()
+
     current_cell = game.cells.get_by_coordinates(current_coordinates)
     if current_cell.is_control():
         game.time_is_running = True
 
     game.player = current_cell
-    Logger.log(game.to_string())
 
-    moves_definer.define_moves()
-    moves_estimator.estimate_moves()
-    selected_move = game.get_next_move()
-    print(selected_move.direction.value)
+    selected_direction = direction_dispatcher.get_next_direction()
+    print(selected_direction.value)

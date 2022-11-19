@@ -2,10 +2,9 @@ from math import sqrt
 from typing import Optional, Iterator
 
 from common.collection import MutableCollection
-from common.stringify_interface import StringifyInterface
 
 
-class Coordinates(StringifyInterface):
+class Coordinates:
     __LEFT_PIXEL = 0
     __TOP_PIXEL = 0
 
@@ -35,7 +34,7 @@ class Coordinates(StringifyInterface):
         return Coordinates(self.x+other.x, self.y+other.y)
 
     def is_same(self, coordinates: 'Coordinates') -> bool:
-        if self.to_string() == coordinates.to_string():
+        if self.x == coordinates.x and self.y == coordinates.y:
             return True
 
         return False
@@ -78,13 +77,6 @@ class Coordinates(StringifyInterface):
         circle_radius = abs((x_2 - x_1) * y_1 + (y_1 - y_2) * x_1) / sqrt(pow(x_2 - x_1, 2) + pow(y_2 - y_1, 2))
 
         return circle_radius
-
-    def to_string(self) -> str:
-        return '{} {}'.format(self.x, self.y)
-
-    def from_string(self, string: str) -> 'Coordinates':
-        coordinates_pair = string.split(' ')
-        return Coordinates(int(coordinates_pair[0]), int(coordinates_pair[1]))
 
 
 class CoordinatesCollection(MutableCollection):
