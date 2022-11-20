@@ -7,7 +7,7 @@ from game import Game
 class PathFinder:
     """
     Based on the basic Sample algorythm from https://en.wikipedia.org/wiki/Pathfinding
-    Can be improved with A* though
+    Can be improved with A* though http://theory.stanford.edu/~amitp/GameProgramming/AStarComparison.html
     """
 
     def __init__(self, game: Game):
