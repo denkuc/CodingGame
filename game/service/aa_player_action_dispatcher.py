@@ -17,4 +17,4 @@ class PlayerActionDispatcher:
         return actions
 
     def get_action_for_player(self, player: Player) -> BaseAction:
-        return self.__strategy_factory.get_strategy().execute(player)
+        return self.__strategy_factory.get_strategy().execute(self.game)

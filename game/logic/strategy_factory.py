@@ -1,7 +1,7 @@
 from game import Game
 from logic.strategy.base_strategy import BaseStrategy
-from logic.strategy.move_strategy import MoveStrategy
-from logic.strategy.push_strategy import PushStrategy
+from logic.strategy.grow_strategy import MoveStrategy
+from logic.strategy.wait_strategy import PushStrategy
 
 
 class StrategyFactory:

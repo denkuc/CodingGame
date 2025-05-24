@@ -1,4 +1,4 @@
-from main import BaseAction
+from unleash_the_geek_2024.main import BaseAction
 
 from entity.actions.push_action import PushAction
 from entity.direction import Direction
